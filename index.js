@@ -19,7 +19,15 @@ app.get("/characters", async (req, res) => {
     const skip = (page - 1) * limit;
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}&limit=${limit}&skip=${skip}&name=${name}`,
+      `https://lereacteur-marvel-api.herokuapp.com/characters`,
+      {
+        params: {
+          apiKey: process.env.MARVEL_API_KEY,
+          limit,
+          skip,
+          name,
+        },
+      },
     );
     res.json(response.data);
   } catch (error) {
@@ -37,7 +45,15 @@ app.get("/comics", async (req, res) => {
     const skip = (page - 1) * limit;
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}&limit=${limit}&skip=${skip}&title=${title}`,
+      `https://lereacteur-marvel-api.herokuapp.com/comics`,
+      {
+        params: {
+          apiKey: process.env.MARVEL_API_KEY,
+          limit,
+          skip,
+          title,
+        },
+      },
     );
     res.json(response.data);
   } catch (error) {
@@ -51,7 +67,12 @@ app.get("/comics/:characterId", async (req, res) => {
     const characterId = req.params.characterId;
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${characterId}?apiKey=${process.env.MARVEL_API_KEY}`,
+      `https://lereacteur-marvel-api.herokuapp.com/comics/${characterId}`,
+      {
+        params: {
+          apiKey: process.env.MARVEL_API_KEY,
+        },
+      },
     );
 
     res.json(response.data);
@@ -66,7 +87,12 @@ app.get("/comic/:comicId", async (req, res) => {
     const comicId = req.params.comicId;
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comic/${comicId}?apiKey=${process.env.MARVEL_API_KEY}`,
+      `https://lereacteur-marvel-api.herokuapp.com/comic/${comicId}`,
+      {
+        params: {
+          apiKey: process.env.MARVEL_API_KEY,
+        },
+      },
     );
 
     res.json(response.data);
@@ -81,7 +107,12 @@ app.get("/character/:characterId", async (req, res) => {
     const characterId = req.params.characterId;
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/character/${characterId}?apiKey=${process.env.MARVEL_API_KEY}`,
+      `https://lereacteur-marvel-api.herokuapp.com/character/${characterId}`,
+      {
+        params: {
+          apiKey: process.env.MARVEL_API_KEY,
+        },
+      },
     );
 
     res.json(response.data);
@@ -91,6 +122,8 @@ app.get("/character/:characterId", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
